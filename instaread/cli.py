@@ -4,6 +4,8 @@
 Usage:
   instaread [--archive]
   instaread folders
+  instaread unreads
+  instaread archiveds
   instaread -h | --help
   instaread --version
 
@@ -20,7 +22,7 @@ from .instaread import login
 from .instaread import sync
 from .instaread import read_last_synced_bookmark
 from .instaread import copy_read_assets
-from .instaread import folders
+from .instaread import folders, unreads, archiveds
 
 __version__ = "0.1.1"
 __author__ = "Dat Truong"
@@ -35,6 +37,14 @@ def main():
 
     if args['folders']:
         folders()
+        return
+
+    if args['unreads']:
+        unreads()
+        return
+
+    if args['archiveds']:
+        archiveds()
         return
 
     copy_read_assets()

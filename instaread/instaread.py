@@ -142,4 +142,15 @@ def sync():
 
 
 def folders():
-    print(INSTAPAPER_ENGINE.folders())
+    for folder in INSTAPAPER_ENGINE.folders():
+        print(folder)
+
+
+def unreads():
+    for bookmark in INSTAPAPER_ENGINE.bookmarks():
+        print(bookmark)
+
+
+def archiveds():
+    for bookmark in INSTAPAPER_ENGINE.bookmarks(folder='archive'):
+        print(bookmark)
