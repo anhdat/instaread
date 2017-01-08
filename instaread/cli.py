@@ -3,6 +3,7 @@
 
 Usage:
   instaread [--archive]
+  instaread putback
   instaread folders
   instaread unreads
   instaread archiveds
@@ -23,6 +24,7 @@ from .instaread import sync
 from .instaread import read_last_synced_bookmark
 from .instaread import copy_read_assets
 from .instaread import folders, unreads, archiveds
+from .instaread import put_back
 
 __version__ = "0.1.1"
 __author__ = "Dat Truong"
@@ -34,6 +36,10 @@ def main():
     args = docopt(__doc__, version=__version__)
     should_archive = args['--archive']
     login()
+
+    if args['putback']:
+        put_back()
+        return
 
     if args['folders']:
         folders()

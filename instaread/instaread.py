@@ -92,10 +92,15 @@ def synced_bookmarks():
 
 
 def read_last_synced_bookmark(should_archive=False):
-    last_bookmark = synced_bookmarks()[0]
-    read(last_bookmark)
-    if should_archive:
-        last_bookmark.archive()
+    # last_bookmark = synced_bookmarks()[0]
+    unreads = INSTAPAPER_ENGINE.bookmarks(limit=1)
+    if unreads:
+        last_bookmark = unreads[0]
+        read(last_bookmark)
+        if should_archive:
+            last_bookmark.archive()
+    else:
+        print('No unread')
 
 
 def article_template():
@@ -139,6 +144,16 @@ def save_bookmarks(bookmarks):
 def sync():
     print('Syncing...')
     download_bookmarks()
+
+
+def put_back():
+    """ Unarchive last archived item
+    """
+    print('Put back last archived item...')
+    archiveds = INSTAPAPER_ENGINE.bookmarks(folder='archive', limit=1)
+    if archiveds:
+        last_archived = archiveds[0]
+        last_archived.unarchive()
 
 
 def folders():
