@@ -27,7 +27,7 @@ from .instaread import copy_read_assets
 from .instaread import folders, unreads, archiveds
 from .instaread import put_back
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __author__ = "Dat Truong"
 __license__ = "MIT"
 
