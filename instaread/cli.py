@@ -20,7 +20,7 @@ from .instaread import sync
 from .instaread import read_last_synced_bookmark
 from .instaread import copy_read_assets
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Dat Truong"
 __license__ = "MIT"
 

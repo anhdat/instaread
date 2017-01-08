@@ -53,7 +53,7 @@ def read(fname):
 
 setup(
     name='instaread',
-    version="0.1.0",
+    version="0.1.1",
     description='Fast and minimal CLI application to read Instapaper from terminal',
     long_description=read("README.rst"),
     author='Dat Truong',
