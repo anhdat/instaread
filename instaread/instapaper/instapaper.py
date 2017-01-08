@@ -329,6 +329,16 @@ class Instapaper(object):
         self.token = None
         self.http = None
 
+    def get_token_and_secret(self, username, password):
+        response, content = self.client.request(
+            "/".join([_BASE_, _API_VERSION_, _ACCESS_TOKEN_]),
+            "POST", urlencode({
+                'x_auth_mode': 'client_auth',
+                'x_auth_username': username,
+                'x_auth_password': password}))
+        _oauth = dict(urlparse.parse_qsl(content.decode('utf-8')))
+        return (_oauth['oauth_token'], _oauth['oauth_token_secret'])
+
     def login(self, username, password):
         response, content = self.client.request(
             "/".join([_BASE_, _API_VERSION_, _ACCESS_TOKEN_]),

@@ -2,7 +2,7 @@
 '''instaread
 
 Usage:
-  instaread [--archive]
+  instaread [--archive][--force]
   instaread putback
   instaread folders
   instaread unreads
@@ -14,6 +14,7 @@ Options:
   -h --help     Show this screen.
                 Open last unread
   --archive     Open last unread and archive it
+  --force       Force refresh token and secret
   --version     Show version.
 '''
 from docopt import docopt
@@ -35,7 +36,8 @@ def main():
     '''Main entry point for the instaread CLI.'''
     args = docopt(__doc__, version=__version__)
     should_archive = args['--archive']
-    login()
+    should_force = args['--force']
+    login(forced=should_force)
 
     if args['putback']:
         put_back()

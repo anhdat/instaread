@@ -20,6 +20,8 @@ assets_location.mkdir(exist_ok=True)
 bookmarks_location = assets_location.joinpath('bookmarks.json')
 bookmarks_location.touch()
 read_path = assets_location.joinpath('read')
+token_path = assets_location.joinpath('token')
+token_path.touch()
 
 
 class AppException(Exception):
@@ -58,11 +60,35 @@ machine instapaper.com
     return (username, password)
 
 
-def login(username=None, password=None):
+def set_local_token_and_secret(token, secret):
+    return token_path.write_text('\n'.join([token, secret]))
+
+
+def get_local_token_and_secret():
+    token_content = token_path.read_text()
+    if token_content:
+        return token_content.split('\n')
+
+
+def login(username=None, password=None, forced=False):
     print('Logging In...')
+
     if not username and not password:
         username, password = credentials_from_netrc()
-    INSTAPAPER_ENGINE.login(username, password)
+
+    if forced:
+        token, secret = INSTAPAPER_ENGINE.get_token_and_secret(username, password)
+        set_local_token_and_secret(token, secret)
+
+    parsed_tokens = get_local_token_and_secret()
+
+    if parsed_tokens:
+        token, secret = parsed_tokens
+    else:
+        token, secret = INSTAPAPER_ENGINE.get_token_and_secret(username, password)
+        set_local_token_and_secret(token, secret)
+
+    INSTAPAPER_ENGINE.login_with_token(token, secret)
 
 
 class BookmarkJSONEncoder(json.JSONEncoder):
