@@ -139,3 +139,7 @@ def save_bookmarks(bookmarks):
 def sync():
     print('Syncing...')
     download_bookmarks()
+
+
+def folders():
+    print(INSTAPAPER_ENGINE.folders())

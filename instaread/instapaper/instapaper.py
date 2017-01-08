@@ -121,6 +121,29 @@ def dehtml(text):
         return text
 
 
+class Folder(object):
+    """
+    {
+        'sync_to_mobile': 1, 'position': 1468247492,
+        'folder_id': 2973166, 'slug': 'swift',
+        'display_title': 'Swift', 'title': 'Swift',
+        'type': 'folder'
+    }
+    """
+
+    def __init__(self, id, title, slug):
+        super().__init__()
+        self.id = id
+        self.title = title
+        self.slug = slug
+
+    def __str__(self):
+        return ('Folder: {id} - {title}'.format(id=self.id, title=self.title))
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class Bookmark(object):
 
     def __init__(self, parent, params):
@@ -363,7 +386,7 @@ class Instapaper(object):
         folders = []
         items = json.loads(data.decode('utf-8'))
         for item in items:
-            folders.append(item)
+            folders.append(Folder(item['folder_id'], item['title'], item['slug']))
         return folders
 
     def create_folder(self, title):
