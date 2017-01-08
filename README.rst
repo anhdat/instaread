@@ -14,11 +14,24 @@ Fast and minimal CLI application to read Instapaper from terminal
 Usage
 --------
 
-  instaread [--archive][--force]           Read the last unread item. Use with '--archive' to show your commitment.
-  instaread putback                        Unarchive last archived item. Use after '--archive' to take back you overconfidence.
-  instaread folders                        List all folders
-  instaread unreads                        List all unread items
-  instaread archiveds                      List all archived items
+Main flow
+
+    instaread
+
+Read the last unread item. Use with '--archive' as 'instaread --archive' to show your commitment.
+
+In the case you was overconfident, unarchive last archived item with:
+    instaread putback
+
+More commands:
+
+```
+Usage:
+  instaread [--archive][--force]
+  instaread putback
+  instaread folders
+  instaread unreads
+  instaread archiveds
   instaread -h | --help
   instaread --version
 
@@ -28,6 +41,7 @@ Options:
   --archive     Open last unread and archive it
   --force       Force refresh token and secret
   --version     Show version.
+```
 
 Installation
 ------------
