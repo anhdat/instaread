@@ -2,14 +2,14 @@
 '''instaread
 
 Usage:
-  instaread [--read]
+  instaread [--archive]
   instaread -h | --help
   instaread --version
 
 Options:
   -h --help     Show this screen.
                 Open last unread
-  --read        Open last unread and mark it as read
+  --archive     Open last unread and archive it
   --version     Show version.
 '''
 from docopt import docopt
@@ -27,12 +27,12 @@ __license__ = "MIT"
 
 def main():
     '''Main entry point for the instaread CLI.'''
-    # args = docopt(__doc__, version=__version__)
-    # mark_as_read = args['--read']
+    args = docopt(__doc__, version=__version__)
+    should_archive = args['--archive']
     copy_read_assets()
     login()
     sync()
-    read_last_synced_bookmark()
+    read_last_synced_bookmark(should_archive=should_archive)
 
 
 if __name__ == '__main__':

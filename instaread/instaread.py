@@ -91,9 +91,11 @@ def synced_bookmarks():
     return json.loads(json_content, cls=BookmarkJSONDecoder)
 
 
-def read_last_synced_bookmark():
+def read_last_synced_bookmark(should_archive=False):
     last_bookmark = synced_bookmarks()[0]
     read(last_bookmark)
+    if should_archive:
+        last_bookmark.archive()
 
 
 def article_template():
