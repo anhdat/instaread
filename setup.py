@@ -82,5 +82,7 @@ setup(
         ]
     },
     tests_require=['pytest'],
+    packages=['instaread', 'instaread.instapaper'],
+    include_package_data=True,
     cmdclass={'test': PyTest}
 )
