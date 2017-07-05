@@ -3,6 +3,7 @@
 
 Usage:
   instaread [--archive][--force]
+  instaread archive
   instaread putback
   instaread folders
   instaread unreads
@@ -25,7 +26,7 @@ from .instaread import sync
 from .instaread import read_last_synced_bookmark
 from .instaread import copy_read_assets
 from .instaread import folders, unreads, archiveds
-from .instaread import put_back
+from .instaread import put_back, archive
 
 __version__ = "0.1.3"
 __author__ = "Dat Truong"
@@ -38,6 +39,10 @@ def main():
     should_archive = args['--archive']
     should_force = args['--force']
     login(forced=should_force)
+
+    if args['archive']:
+        archive()
+        return
 
     if args['putback']:
         put_back()

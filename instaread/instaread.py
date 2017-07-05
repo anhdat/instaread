@@ -117,11 +117,25 @@ def synced_bookmarks():
     return json.loads(json_content, cls=BookmarkJSONDecoder)
 
 
-def read_last_synced_bookmark(should_archive=False):
-    # last_bookmark = synced_bookmarks()[0]
+def get_last_bookmark():
     unreads = INSTAPAPER_ENGINE.bookmarks(limit=1)
     if unreads:
-        last_bookmark = unreads[0]
+        return unreads[0]
+    else:
+        return None
+
+
+def archive_last_bookmark():
+    last_bookmark = get_last_bookmark()
+    if last_bookmark:
+        last_bookmark.archive()
+    else:
+        print('No unread')
+
+
+def read_last_synced_bookmark(should_archive=False):
+    last_bookmark = get_last_bookmark()
+    if last_bookmark:
         read(last_bookmark)
         if should_archive:
             last_bookmark.archive()
@@ -130,14 +144,14 @@ def read_last_synced_bookmark(should_archive=False):
 
 
 def article_template():
-    resource_path = '/'.join(('templates', 'read_template.html'))
+    resource_path = 'templates/read_template.html'
     path = path_from_package(resource_path)
     template_content = pathlib.Path(path).read_text()
     return Template(template_content)
 
 
 def write_rendered_article(rendered_content):
-    temp_rendered_html_file_path = read_path.joinpath('read.html')
+    temp_rendered_html_file_path = read_path / 'read.html'
     temp_rendered_html_file_path.write_text(rendered_content)
     return str(temp_rendered_html_file_path)
 
@@ -152,7 +166,11 @@ def read(bookmark):
         article_link_text=bookmark.url,
     )
     article_file_path = write_rendered_article(rendered_content)
-    webbrowser.open(article_file_path)
+    import subprocess
+    print(article_file_path)
+    subprocess.call(['/usr/bin/chromium', '--app=file://{}'.format(article_file_path)])
+    # subprocess.call('chromium', '--app={}'.format(article_file_path))
+    # webbrowser.open(article_file_path)
 
 
 def download_bookmarks():
@@ -165,6 +183,11 @@ def download_bookmarks():
 def save_bookmarks(bookmarks):
     bookmarks_content = json.dumps(bookmarks, cls=BookmarkJSONEncoder)
     bookmarks_location.write_text(bookmarks_content, encoding='utf-8')
+
+
+def archive():
+    print('Archive last bookmark')
+    archive_last_bookmark()
 
 
 def sync():

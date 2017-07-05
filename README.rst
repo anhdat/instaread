@@ -27,20 +27,21 @@ More commands:
 .. code-block::
     Usage:
       instaread [--archive][--force]
+      instaread archive
       instaread putback
       instaread folders
       instaread unreads
       instaread archiveds
       instaread -h | --help
       instaread --version
-    
+
     Options:
       -h --help     Show this screen.
 		    Open last unread
       --archive     Open last unread and archive it
       --force       Force refresh token and secret
       --version     Show version.
-  
+
 
 Installation
 ------------
